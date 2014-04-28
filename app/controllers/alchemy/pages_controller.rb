@@ -49,7 +49,8 @@ module Alchemy
         # scope pages to it to make sure we can raise a 404 if the urlname
         # is not available in that language.
         Page.contentpages.where(
-          urlname:       params[:urlname],
+          # Hack to allow page names ending in .html
+          urlname:       params[:urlname] + (params[:format] == 'html' ? '.' + params[:format] : ''),
           language_id:   Language.current.id,
           language_code: params[:lang] || Language.current.code
         ).first
