@@ -76,6 +76,9 @@ module Alchemy
       url_name = convert_to_urlname(name)
       if url_name.length < 3
         ('-' * (3 - url_name.length)) + url_name
+      elsif name.end_with?('.html')
+        # Hack to allow page names ending in .html
+        url_name[0..-6] + '.html'
       else
         url_name
       end
