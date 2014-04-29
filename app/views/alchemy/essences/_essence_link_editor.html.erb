@@ -4,10 +4,9 @@
   <%= text_field_tag(
     '',
     content.ingredient,
-    :class => "thin_border text_with_icon disabled",
+    :class => "thin_border text_with_icon",
     :name => nil,
-    :id => nil,
-    :disabled => true
+    :id => nil
   ) %>
   <%= hidden_field_tag content.form_field_name(:link), content.essence.link %>
   <%= hidden_field_tag content.form_field_name(:link_title), content.essence.link_title %>
@@ -18,6 +17,9 @@
 <script type="text/javascript" charset="utf-8">
   $('#<%= content.form_field_id(:link) %>').on('change', function() {
     $('#<%= content.dom_id %> input.text_with_icon').val($(this).val());
+  });
+  $('#<%= content.dom_id %> input.text_with_icon').on('change', function() {
+    $('#<%= content.form_field_id(:link) %>').val($(this).val());
   });
 </script>
 <% end %>

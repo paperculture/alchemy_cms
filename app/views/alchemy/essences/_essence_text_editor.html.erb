@@ -8,7 +8,14 @@
       style: html_options[:style]
     ) %>
     <% if content.settings[:linkable] %>
-      <%= hidden_field_tag content.form_field_name(:link), content.essence.link %>
+      <%# Show the link value in the editor so users don't have to open the modal %>
+      <%= text_field_tag(
+        content.form_field_name(:link),
+        content.essence.link,
+        class: ["thin_border #{content.settings[:linkable] ? ' text_with_icon' : ''}", html_options[:class]].join(' '),
+        style: html_options[:style],
+        placeholder: 'Link'
+      ) %>
       <%= hidden_field_tag content.form_field_name(:link_title), content.essence.link_title %>
       <%= hidden_field_tag content.form_field_name(:link_class_name), content.essence.link_class_name %>
       <%= hidden_field_tag content.form_field_name(:link_target), content.essence.link_target %>
