@@ -16,6 +16,7 @@ module Alchemy
     # Showing page from params[:urlname]
     #
     def show
+      NewRelic::Agent.set_transaction_name('Alchemy::PagesController#show/' + @page.page_layout)
       if render_fresh_page?
         respond_to do |format|
           format.html { render layout: !request.xhr? }
