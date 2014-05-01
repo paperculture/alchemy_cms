@@ -53,7 +53,9 @@ module Alchemy
     #
     def picture_url(options = {})
       return if picture.nil?
-      routes.show_picture_path(picture_params(options))
+      params = picture_params(options)
+      return picture.image_file.remote_url(host: 'd30sfmvnlufuao.cloudfront.net') if params[:crop].nil?
+      routes.show_picture_path(params)
     end
 
     # The name of the picture used as preview text in element editor views.
