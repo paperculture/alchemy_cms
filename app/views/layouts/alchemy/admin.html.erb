@@ -29,11 +29,11 @@
         }
       };
     </script>
-    <%= render 'alchemy/admin/partials/routes' %>
-    <%= javascript_include_tag('alchemy/alchemy', "data-turbolinks-track" => true) %>
-    <%= yield :javascript_includes %>
   </head>
   <body id="alchemy" class="<%= body_class %>">
+    <%= render 'alchemy/admin/partials/routes' %>
+    <%= javascript_include_tag('alchemy/alchemy', "data-turbolinks-track" => true, "data-turbolinks-eval" => false) %>
+    <%= yield :javascript_includes %>
     <noscript>
       <h1><%= _t(:javascript_disabled_headline) %></h1>
       <p><%= _t(:javascript_disabled_text) %></p>

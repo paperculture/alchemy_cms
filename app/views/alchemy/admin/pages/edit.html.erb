@@ -112,7 +112,7 @@
 <% if Alchemy::Tinymce.custom_config_contents(@page).any? %>
   <%= render 'tinymce_custom_config' %>
 <% end %>
-<script type="text/javascript" charset="utf-8">
+<script>
 
   $(function() {
     $('#unlock_page_form, #visit_page_form, #publish_page_form').on('submit', function(event) {
