@@ -1,5 +1,6 @@
 # Alchemy Tinymce wrapper
 #
+Alchemy.Tinymce = Alchemy.Tinymce || {}
 $.extend Alchemy.Tinymce,
 
   # Returns default config for a tinymce editor.

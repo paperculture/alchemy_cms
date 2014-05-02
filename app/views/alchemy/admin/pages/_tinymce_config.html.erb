@@ -6,14 +6,16 @@
   };
 
   // Holds the default Alchemy TinyMCE configuration
-  Alchemy.Tinymce = Alchemy.Tinymce || {
-    defaults: {
-      plugins: '<%= Alchemy::Tinymce.plugins.join(',') %>',
-      <% Alchemy::Tinymce.init.each do |k, v| %>
-      <%= k %>: <%== v.to_json %>,
-      <% end %>
+  $.extend(true, Alchemy, {
+    Tinymce: {
+      defaults: {
+        plugins: '<%= Alchemy::Tinymce.plugins.join(',') %>',
+        <% Alchemy::Tinymce.init.each do |k, v| %>
+        <%= k %>: <%== v.to_json %>,
+        <% end %>
+      }
     }
-  };
+  });
 
 <% if Alchemy::Tinymce.custom_config_contents.any? %>
   // Holds custom TinyMCE configurations
