@@ -54,7 +54,7 @@ module Alchemy
         element = element_description(name)
         if element
           (element.fetch('contents', []) +
-            element.fetch('available_contents', [])).collect { |c| c['type'] }
+            element.fetch('available_contents', [])).collect { |c| c['type'] }.compact
         else
           []
         end
