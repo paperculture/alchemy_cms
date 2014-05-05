@@ -54,7 +54,7 @@ module Alchemy
       def essence_types(name)
         element = element_definition(name)
         return [] unless element
-        element.fetch('contents', []).collect { |c| c['type'] }
+        element.fetch('contents', []).collect { |c| c['type'] }.compact
       end
     end
   end
