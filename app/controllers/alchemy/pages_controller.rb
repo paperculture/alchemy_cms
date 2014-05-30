@@ -140,7 +140,13 @@ module Alchemy
     def render_page
       respond_to do |format|
         format.html do
-          render action: :show, layout: !request.xhr?
+          if request.xhr?
+            render action: :show, layout: false
+          elsif @page.has_render_layout?
+            render action: :show, layout: @page.render_layout
+          else
+            render action: :show, layout: true
+          end
         end
 
         format.rss do
@@ -150,6 +156,8 @@ module Alchemy
             render xml: {error: 'Not found'}, status: 404
           end
         end
+
+        format.json { render json: @page }
       end
     end
 
