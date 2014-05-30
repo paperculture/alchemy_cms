@@ -127,7 +127,10 @@ module Alchemy
         :urlname => @page.urlname
       }
       options = defaults.merge(options)
-      redirect_to show_page_path(additional_params.merge(options)), :status => 301
+      options = additional_params.merge(options)
+      # Hack to prevent a redirect to .html.html because we allow page names ending in .html
+      options.delete(:format) if options[:urlname].end_with?('.html') && options[:format] == 'html'
+      redirect_to show_page_path(options), :status => 301
     end
 
     def additional_params
@@ -137,7 +140,7 @@ module Alchemy
     end
 
     def legacy_urls
-      LegacyPageUrl.joins(:page).where(urlname: params[:urlname], alchemy_pages: {language_id: Language.current.id})
+      LegacyPageUrl.joins(:page).where(urlname: params[:urlname] + (params[:format] == 'html' ? '.html' : ''), alchemy_pages: {language_id: Language.current.id})
     end
 
     def last_legacy_url
