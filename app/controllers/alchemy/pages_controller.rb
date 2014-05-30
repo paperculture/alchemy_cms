@@ -19,7 +19,15 @@ module Alchemy
       NewRelic::Agent.set_transaction_name('Alchemy::PagesController#show/' + @page.page_layout)
       if render_fresh_page?
         respond_to do |format|
-          format.html { render layout: !request.xhr? }
+          format.html do
+            if request.xhr?
+              render layout: false
+            elsif @page.has_render_layout?
+              render layout: @page.render_layout
+            else
+              render layout: true
+            end
+          end
           format.rss do
             if @page.contains_feed?
               render action: 'show', layout: false, handlers: [:builder]
