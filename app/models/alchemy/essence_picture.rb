@@ -57,7 +57,9 @@ module Alchemy
       # Choose a CDN hostname based on the hash of each picture to increase concurrent HTTP connections
       hosts = %w( d30sfmvnlufuao.cloudfront.net s1.paperculture.com )
       # Divide hash by 3 because many hashes ended in 0 and caused the first host to be used for all images
-      return picture.image_file.remote_url(host: hosts[picture.upload_hash.to_i / 3 % hosts.size]) if params[:crop].nil?
+      if params[:crop].nil? && params[:size].nil?
+        return picture.image_file.remote_url(host: hosts[picture.upload_hash.to_i / 3 % hosts.size])
+      end
       routes.show_picture_path(params)
     end
 
