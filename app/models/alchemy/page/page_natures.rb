@@ -48,7 +48,7 @@ module Alchemy
     end
 
     def render_layout
-      !PageLayout.get(self.page_layout)["render_layout"]
+      PageLayout.get(self.page_layout)["render_layout"]
     end
 
     # Returns a Hash describing the status of the Page.
