@@ -142,7 +142,7 @@ module Alchemy
     def render_page
       respond_to do |format|
         format.html do
-          if request.xhr?
+          if request.xhr? && params[:body].present?
             render action: :show, layout: false
           elsif @page.has_render_layout?
             render action: :show, layout: @page.render_layout
