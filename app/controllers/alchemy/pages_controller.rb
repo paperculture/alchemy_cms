@@ -20,7 +20,7 @@ module Alchemy
       if render_fresh_page?
         respond_to do |format|
           format.html do
-            if request.xhr?
+            if request.xhr? && params[:body].present?
               render layout: false
             elsif @page.has_render_layout?
               render layout: @page.render_layout
