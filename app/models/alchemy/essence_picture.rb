@@ -56,16 +56,19 @@ module Alchemy
       params = picture_params(options)
       # Get all photos from imgix so they can be scaled and cropped dynamically via imgix.js.
       # This host works for unscaled images in all environments because images are in an S3 bucket.
-      host = 'paperculture.imgix.net'
+      productionHost = 'paperculture.imgix.net'
       if params[:crop].nil? && params[:size].nil?
-        return picture.image_file.remote_url(host: host)
+        return picture.image_file.remote_url(host: productionHost)
       end
-      # This will break scaled images in dev, but imgix.js doesn't like URLs without a host so this is a quick fix
-      scaledImageHost = case Rails.env
-                          when 'production'
-                            host
-                          else
+      scaledImageHost = if Rails.env == 'production'
+                          if ENV['NEW_RELIC_APP_NAME'].to_s.include?('Staging')
                             'paperculture-staging.imgix.net'
+                          else
+                            productionHost
+                          end
+                        else
+                          # Bypass imgix in dev for scaled images since we'll be behind a firewall
+                          'localhost:3000'
                         end
       '//' + scaledImageHost + routes.show_picture_path(params)
     end
