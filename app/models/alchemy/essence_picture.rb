@@ -63,7 +63,19 @@ module Alchemy
         crop_size: crop_size
       }.merge(options)
 
-      picture.url(options)
+      # picture.url(options)
+
+      # Get all photos from imgix so they can be scaled and cropped dynamically via imgix.js.
+      # This host works for unscaled images in all environments because images are in an S3 bucket.
+      # Support for image scaling (params[:size]) and cropping (params[:crop])
+      # using Dragonfly is stripped out here. Instead, this returns the S3 URL of the uploaded
+      # image with a protocol relative URL. _essence_picture_view.html.erb must be updated
+      # to handle image_size, and crop params and merge them with other imgix params to
+      # append to the URL.
+      imgix_s3_proxy = 'pc-alc.imgix.net'
+      picture.image_file.remote_url(host: imgix_s3_proxy).sub('http://', '//') +
+        # Append imgix params as a query string if they exist
+        if options[:imgix].nil? or options[:imgix].empty? then '' else '?' + options[:imgix].to_query end
     end
 
     # Renders a thumbnail representation of the assigned image
