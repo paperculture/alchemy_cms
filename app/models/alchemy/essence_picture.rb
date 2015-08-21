@@ -54,13 +54,20 @@ module Alchemy
     def picture_url(options = {})
       return if picture.nil?
       params = picture_params(options)
-      # Choose a CDN hostname based on the hash of each picture to increase concurrent HTTP connections
-      hosts = %w( d30sfmvnlufuao.cloudfront.net s1.paperculture.com )
-      # Divide hash by 3 because many hashes ended in 0 and caused the first host to be used for all images
+      # Get all photos from imgix so they can be scaled and cropped dynamically via imgix.js.
+      # This host works for unscaled images in all environments because images are in an S3 bucket.
+      host = 'paperculture.imgix.net'
       if params[:crop].nil? && params[:size].nil?
-        return picture.image_file.remote_url(host: hosts[picture.upload_hash.to_i / 3 % hosts.size])
+        return picture.image_file.remote_url(host: host)
       end
-      routes.show_picture_path(params)
+      # This will break scaled images in dev, but imgix.js doesn't like URLs without a host so this is a quick fix
+      scaledImageHost = case Rails.env
+                          when 'production'
+                            host
+                          else
+                            'paperculture-staging.imgix.net'
+                        end
+      '//' + scaledImageHost + routes.show_picture_path(params)
     end
 
     # The name of the picture used as preview text in element editor views.
