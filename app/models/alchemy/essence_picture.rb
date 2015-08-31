@@ -56,21 +56,15 @@ module Alchemy
       params = picture_params(options)
       # Get all photos from imgix so they can be scaled and cropped dynamically via imgix.js.
       # This host works for unscaled images in all environments because images are in an S3 bucket.
-      productionHost = 'paperculture.imgix.net'
-      if params[:crop].nil? && params[:size].nil?
-        return picture.image_file.remote_url(host: productionHost)
-      end
-      scaledImageHost = if Rails.env == 'production'
-                          if ENV['NEW_RELIC_APP_NAME'].to_s.include?('Staging')
-                            'paperculture-staging.imgix.net'
-                          else
-                            productionHost
-                          end
-                        else
-                          # Bypass imgix in dev for scaled images since we'll be behind a firewall
-                          'localhost:3000'
-                        end
-      '//' + scaledImageHost + routes.show_picture_path(params)
+      # Support for image scaling (params[:size]) and cropping (params[:crop])
+      # using Dragonfly is stripped out here. Instead, this returns the S3 URL of the uploaded
+      # image with a protocol relative URL. _essence_picture_view.html.erb must be updated
+      # to handle image_size, and crop params and merge them with other imgix params to
+      # append to the URL.
+      imgix_s3_proxy = 'pc-alc.imgix.net'
+      picture.image_file.remote_url(host: imgix_s3_proxy).sub('http://', '//') +
+        # Append imgix params as a query string if they exist
+        if options[:imgix].nil? or options[:imgix].empty? then '' else '?' + options[:imgix].to_query end
     end
 
     # The name of the picture used as preview text in element editor views.
