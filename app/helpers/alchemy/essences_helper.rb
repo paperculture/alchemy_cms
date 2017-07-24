@@ -73,7 +73,7 @@ module Alchemy
         content: content,
         options: options["for_#{part}".to_sym],
         html_options: html_options
-      }
+      }, formats: options[:for_view][:render_format]
     end
 
     # Renders the +Esssence+ view partial for given +Content+.

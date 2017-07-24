@@ -154,11 +154,11 @@ module Alchemy
 
       element.store_page(@page) if part.to_sym == :view
 
-      render "alchemy/elements/#{element.name}_#{part}", {
+      render file: "alchemy/elements/_#{element.name}_#{part}", locals: {
         element: element,
         counter: counter,
         options: options
-      }.merge(options.delete(:locals) || {})
+      }.merge(options.delete(:locals) || {}), formats: options[:render_format]
 
     rescue ActionView::MissingTemplate => e
       warning(%(

@@ -28,6 +28,9 @@ module Alchemy
               render layout: true
             end
           end
+          format.amp do
+            render layout: 'application'
+          end
           format.rss do
             if @page.contains_feed?
               render action: 'show', layout: false, handlers: [:builder]
