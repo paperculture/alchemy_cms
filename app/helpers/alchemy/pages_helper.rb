@@ -308,7 +308,7 @@ module Alchemy
       options = default_options.merge(options)
       cell = options[:from_page].cells.find_by_name(name)
       return "" if cell.blank?
-      render partial: "alchemy/cells/#{name}", locals: {cell: cell}.merge(options[:locals])
+      render partial: "alchemy/cells/#{name}", locals: {cell: cell}.merge(options[:locals]), formats: options[:render_format]
     end
 
     # Returns true or false if no elements are in the cell found by name.

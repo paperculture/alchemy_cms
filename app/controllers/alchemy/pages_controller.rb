@@ -152,6 +152,10 @@ module Alchemy
           end
         end
 
+        format.amp do
+          render action: :show, layout: 'application'
+        end
+
         format.rss do
           if @page.contains_feed?
             render action: :show, layout: false, handlers: [:builder]
