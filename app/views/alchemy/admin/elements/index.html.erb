@@ -18,7 +18,7 @@
       <%= content_tag :div,
         id: "cell_#{cell.name}",
         class: ["sortable_cell", "#{cell.name}_cell"].join(' '),
-        data: {'cell-id' => cell.id, 'data-droppable-elements' => cell.element_definitions.join(' ')} do %>
+        data: {'cell-id' => cell.id, 'droppable-elements' => cell.element_definitions.join(' ')} do %>
         <%= render partial: 'alchemy/admin/elements/element', collection: elements %>
       <% end %>
     <% end %>
