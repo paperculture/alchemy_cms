@@ -123,7 +123,7 @@ module Alchemy
     # Returns the name for the layout partial
     #
     def layout_partial_name
-      page_layout.parameterize.underscore
+      page_layout&.parameterize&.underscore
     end
 
     # Returns the key that's taken for cache path.
