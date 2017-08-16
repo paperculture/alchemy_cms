@@ -22,8 +22,8 @@
           size: "small",
           content_id: @content,
           element_id: @element,
-          q: params[:q],
-          options: options_from_params,
+          q: params[:q]&.permit(:name_or_image_file_name_cont),
+          options: @options.to_json,
           filter: params[:filter],
           tagged_with: params[:tagged_with]
         }),
@@ -39,8 +39,8 @@
           size: "medium",
           content_id: @content,
           element_id: @element,
-          q: params[:q],
-          options: options_from_params,
+          q: params[:q]&.permit(:name_or_image_file_name_cont),
+          options: @options.to_json,
           filter: params[:filter],
           tagged_with: params[:tagged_with]
         }),
@@ -56,8 +56,8 @@
           size: "large",
           content_id: @content,
           element_id: @element,
-          q: params[:q],
-          options: options_from_params,
+          q: params[:q]&.permit(:name_or_image_file_name_cont),
+          options: @options.to_json,
           filter: params[:filter],
           tagged_with: params[:tagged_with]
         }),

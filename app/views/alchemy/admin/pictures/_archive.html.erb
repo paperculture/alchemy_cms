@@ -25,7 +25,7 @@
     <%= link_to(
       render_icon('delete-small') + Alchemy.t("Clear selection"),
       admin_pictures_path(
-        q: params[:q],
+        q: params[:q]&.permit(:name_or_image_file_name_cont),
         tagged_with: params[:tagged_with],
         size: params[:size],
         filter: params[:filter]
