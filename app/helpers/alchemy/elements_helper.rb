@@ -163,8 +163,7 @@ module Alchemy
         element: element,
         counter: counter,
         options: options,
-        locals: options.delete(:locals) || {}
-      }
+      }.merge(options.delete(:locals) || {})
 
       element.store_page(@page) if part.to_sym == :view
       render "alchemy/elements/#{element.name}_#{part}", options
