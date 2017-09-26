@@ -110,7 +110,8 @@ module Alchemy
     #
     def load_page
       @page ||= Language.current.pages.contentpages.find_by(
-        urlname: params[:urlname],
+        # Hack to allow page names ending in .html
+        urlname:       params[:urlname] + (params[:format] == 'html' ? '.' + params[:format] : ''),
         language_code: params[:locale] || Language.current.code
       )
     end
