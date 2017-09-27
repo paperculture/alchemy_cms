@@ -402,7 +402,7 @@ module Alchemy
 
       # (internal) Returns options for the clipboard select tag
       def clipboard_select_tag_options(items)
-        if @page.persisted? && @page.can_have_cells?
+        if @page.persisted? && @page.can_have_cells? && @parent_element.blank?
           grouped_options_for_select(grouped_elements_for_select(items, :id))
         else
           options = items.map do |item|
