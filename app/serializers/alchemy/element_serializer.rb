@@ -15,6 +15,7 @@ module Alchemy
       :ingredients,
       :content_ids
 
+      has_many :contents
     def ingredients
       object.contents.collect(&:serialize)
     end
