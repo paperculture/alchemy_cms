@@ -166,7 +166,7 @@ module Alchemy
       }.merge(options.delete(:locals) || {})
 
       element.store_page(@page) if part.to_sym == :view
-      render file: "alchemy/elements/_#{element.name}_#{part}", locals: options, formats: options[:render_format]
+      render partial: "alchemy/elements/#{element.name}_#{part}", locals: options, formats: options[:render_format]
     rescue ActionView::MissingTemplate => e
       warning(%(
         Element #{part} partial not found for #{element.name}.\n
