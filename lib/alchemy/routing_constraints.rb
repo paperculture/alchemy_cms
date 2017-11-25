@@ -29,7 +29,7 @@ module Alchemy
     # because it could be a legacy route that needs to be redirected.
     #
     def handable_format?
-      @request.format.symbol.nil? || (@request.format.symbol == :html) || (@request.format.symbol == :rss)
+      @request.format.symbol.nil? || (@request.format.symbol == :html) || (@request.format.symbol == :rss) || (@request.format.symbol == :amp)
     end
 
     # We don't want to handle the Rails info routes.
