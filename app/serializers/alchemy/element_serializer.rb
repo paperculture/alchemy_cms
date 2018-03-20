@@ -15,7 +15,9 @@ module Alchemy
       :ingredients,
       :content_ids
 
-      has_many :contents
+    has_many :contents
+    has_many :nested_elements
+
     def ingredients
       object.contents.collect(&:serialize)
     end
