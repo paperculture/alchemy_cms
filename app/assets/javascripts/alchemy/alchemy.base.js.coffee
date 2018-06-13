@@ -72,9 +72,20 @@ $.extend Alchemy,
   # Initializes all select tag with .alchemy_selectbox class as selectBoxIt instance
   # Pass a jQuery scope to only init a subset of selectboxes.
   SelectBox: (scope) ->
-    $("select.alchemy_selectbox", scope).select2
+    defaultOptions =
       minimumResultsForSearch: 7
       dropdownAutoWidth: true
+
+    $("select.alchemy_selectbox", scope).not('select.alchemy_selectbox[data-template]').select2 defaultOptions
+
+    # Initialize selects with their own custom template specified as a function in their data-template attribute
+    $.each $("select.alchemy_selectbox[data-template]"), (index, selectBoxWithCustomTemplate) ->
+      formatTemplateFunction = eval $(selectBoxWithCustomTemplate).data('template')
+      $(selectBoxWithCustomTemplate).select2 $.extend(defaultOptions,
+        formatResult: formatTemplateFunction,
+        formatSelection: formatTemplateFunction
+      )
+
     return
 
   # Selects cell tab for given name.
