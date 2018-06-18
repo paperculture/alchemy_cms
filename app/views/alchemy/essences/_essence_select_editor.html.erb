@@ -18,14 +18,15 @@
     <code>elements.yml</code>.") %>
   <% else %>
     <%
-    if select_values.is_a?(Hash)
+    if options[:use_opt_group]
       options_tags = grouped_options_for_select(select_values, content.ingredient)
     else
       options_tags = options_for_select(select_values, content.ingredient)
     end %>
     <%= select_tag content.form_field_name, options_tags, {
       class: ["alchemy_selectbox", "essence_editor_select", html_options[:class]].compact,
-      style: html_options[:style]
+      style: html_options[:style],
+      data: html_options[:data]
     } %>
   <% end %>
 <% end %>
