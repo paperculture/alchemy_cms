@@ -38,6 +38,3 @@ group :development, :test do
   gem 'jasmine-rails', github: 'searls/jasmine-rails'
   gem 'jasmine-jquery-rails', github: 'travisjeffery/jasmine-jquery-rails'
 end
-
-# Adds manual transaction naming in PagesController
-gem 'newrelic_rpm'
