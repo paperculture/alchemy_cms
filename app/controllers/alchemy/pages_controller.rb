@@ -66,7 +66,6 @@ module Alchemy
     # descendant it finds. If no public page can be found it renders a 404 error.
     #
     def show
-      NewRelic::Agent.set_transaction_name('Alchemy::PagesController#show/' + @page.page_layout)
       if redirect_url.present?
         redirect_permanently_to redirect_url
       else

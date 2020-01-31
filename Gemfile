@@ -44,6 +44,3 @@ group :production do
   gem 'uglifier', '>= 1.0.3'
   gem 'therubyracer'
 end
-
-# Adds manual transaction naming in PagesController
-gem 'newrelic_rpm'
